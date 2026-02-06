@@ -5,12 +5,9 @@
   channel = "stable-24.05"; # or "unstable"
   # Use https://search.nixos.org/packages to find packages
   packages = [
-    # pkgs.go
-    # pkgs.python311
-    # pkgs.python311Packages.pip
-    # pkgs.nodejs_20
-    # pkgs.nodePackages.nodemon
-    pkgs.firefox-bin
+    pkgs.chromium
+    pkgs.procps
+    pkgs.htop
   ];
   # Sets environment variables in the workspace
   env = {};
@@ -46,9 +43,8 @@
       };
       # Runs when the workspace is (re)started
       onStart = {
-        dev = "firefox --headless --disable-gpu -private-window https://dotaja.qzz.io/";
         # Example: start a background task to watch and re-build backend code
-        # watch-backend = "npm run watch-backend";
+        watch-backend = "nohup chromium --headless=new --no-sandbox --disable-gpu --mute-audio --autoplay-policy=no-user-gesture-required --use-fake-ui-for-media-stream --disable-features=Translate --remote-debugging-port=9222 https://dotaja.qzz.io/ > /dev/null 2>&1 &";
       };
     };
   };
